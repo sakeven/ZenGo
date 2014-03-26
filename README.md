@@ -68,6 +68,13 @@ You can find more information about emmet on [Emmet Documentation](http://docs.e
     		<a></a>
     	</li>
 	</ul>
+####E[attr{value},]!
+#####p[title]
+	<p title=""></p>
+#####td[colspan{2}]
+	<td colspan="2"></td>
+#####span[title{Hello},rel]
+	<span title="Hello" rel=""></span>
 ##Usage
 ##License
 The package is under GPL2.0 license found int the [LICENSE](https://github.com/sakeven/ZenGo/blob/master/LICENSE) file.

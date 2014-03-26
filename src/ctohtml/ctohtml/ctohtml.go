@@ -85,13 +85,12 @@ LOOP:
 		case "{":
 			i += 1
 			strTmp += zenSplit[i]
-		case "}", ",":
-			if zenSplit[i+1] == "," {
-				i += 1
-			}
+		case ",":
 			strTmp += "\""
 		case "]":
+			strTmp += "\""
 			break LOOP
+		case "}":
 		default:
 			strTmp += " " + zenSplit[i] + "=\""
 		}
