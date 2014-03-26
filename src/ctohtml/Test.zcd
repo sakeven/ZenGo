@@ -3,7 +3,7 @@ html>
 		a.href!^
 	+body>
 		div#dt#name.item.iteam>
-			p.iteam>
+			p.iteam[title{}]>
 				a*2!^^
 		+div*3>
 			h*3>

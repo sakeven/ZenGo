@@ -35,7 +35,7 @@ func ToHtml(phase string) string { //text convert to HTML
 
 type Str []string
 
-const opStr string = "#>[]*.^!+"
+const opStr string = "#>[]*.^!+{},"
 
 func Split(zenText string) Str {
 	var (
@@ -73,6 +73,30 @@ func Split(zenText string) Str {
 		zenSplit = append(zenSplit, "^")
 	}
 	return zenSplit
+}
+
+func attrCase(zenSplit Str) (string, int) {
+	var strTmp string
+	i := -1
+LOOP:
+	for {
+		i += 1
+		switch zenSplit[i] {
+		case "{":
+			i += 1
+			strTmp += zenSplit[i]
+		case "}", ",":
+			if zenSplit[i+1] == "," {
+				i += 1
+			}
+			strTmp += "\""
+		case "]":
+			break LOOP
+		default:
+			strTmp += " " + zenSplit[i] + "=\""
+		}
+	}
+	return strTmp, i + 1
 }
 
 func ZenHtml(tab string, zenSplit Str) (string, int) {
@@ -176,7 +200,17 @@ LOOP:
 			} else {
 				zenTextHtml += ">"
 			}
-
+		case "[":
+			if flagId || flagClass {
+				tag += "\""
+				flagId = false
+				flagClass = false
+				zenTextHtml += "\""
+			}
+			strTmp, cntTmp := attrCase(zenSplit[i+1:])
+			zenTextHtml += strTmp
+			tag += strTmp
+			i += cntTmp
 		case "^": //return to its father node
 			recnt = i + 1
 			break LOOP
