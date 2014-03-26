@@ -52,6 +52,23 @@ You can find more information about emmet on [Emmet Documentation](http://docs.e
 	</div>
 	<div>
 	</div>
+####E!*N
+#####p!*3
+	<p></p>
+	<p></p>
+	<p></p>
+#####ul#name>li.item!*3>a
+	<ul id="name">
+    	<li class="item">
+    		<a></a>
+    	</li>
+    	<li class="item">
+    		<a></a>
+    	</li>
+    	<li class="item">
+    		<a></a>
+    	</li>
+	</ul>
 ##Usage
 ##License
 The package is under GPL2.0 license found int the [LICENSE](https://github.com/sakeven/ZenGo/blob/master/LICENSE) file.
