@@ -37,7 +37,11 @@ type Str []string
 
 const opStr string = "#>[]*.^!+"
 
+<<<<<<< HEAD
 func Split(zenText string) Str {
+=======
+func Split(zenText string) (Str, int) {
+>>>>>>> b8912ca1331952806879f5d94ed38ad716d54c4d
 	var (
 		zenSplit Str
 		phase    string
@@ -62,7 +66,11 @@ func Split(zenText string) Str {
 				break
 			}
 		}
+<<<<<<< HEAD
 		if nopflag && char != '\n' && char != '\r' && char != ' ' && char != '	' {
+=======
+		if nopflag && char != '\n' && char != ' ' && char != '	' {
+>>>>>>> b8912ca1331952806879f5d94ed38ad716d54c4d
 			phase += string(char)
 		}
 	}
