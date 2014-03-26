@@ -17,17 +17,17 @@ You can find more information about emmet on [Emmet Documentation](http://docs.e
 #####div#name.one.two
 	<div id="name" class="one two"></div>
 ####E>E
-######head>p
+#####head>p
 	<head>
 	    <p></p>
 	</head>
-######table>tr>td
+#####table>tr>td
 	<table>
 		<tr>
     		<td></td>
 		</tr>
 	</table>
-######ul#name>li.item
+#####ul#name>li.item
 	<ul id="name">
     	<li class="item"></li>
 	</ul>
