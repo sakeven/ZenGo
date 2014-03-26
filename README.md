@@ -46,18 +46,17 @@ You can find more information about emmet on [Emmet Documentation](http://docs.e
 	</div>
 ####E>E!^+E!
 *^* is a flag that we should return to the father element
-#####div>h^+div!
+#####div>h!^+div!
 	<div>
 		<h></h>
 	</div>
-	<div>
-	</div>
+	<div></div>
 ####E!*N
 #####p!*3
 	<p></p>
 	<p></p>
 	<p></p>
-#####ul#name>li.item!*3>a
+#####ul#name>li.item*3>a!
 	<ul id="name">
     	<li class="item">
     		<a></a>
