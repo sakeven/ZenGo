@@ -1,7 +1,9 @@
 package ctohtml
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"stacker/stack"
 	"strconv"
 )
@@ -60,7 +62,7 @@ func Split(zenText string) (Str, int) {
 				break
 			}
 		}
-		if nopflag {
+		if nopflag && char != '\n' && char != ' ' && char != '	' {
 			phase += string(char)
 		}
 	}
@@ -70,7 +72,7 @@ func Split(zenText string) (Str, int) {
 	for i := 0; i < leve; i += 1 {
 		zenSplit = append(zenSplit, "^")
 	}
-	return zenSplit, leve
+	return zenSplit
 }
 
 func ZenHtml(tab string, zenSplit Str) (string, int) {
@@ -147,22 +149,18 @@ LOOP:
 				tag += "\n" + zenTmp
 				i += cntTmp
 			}
-			ele, _ := st.Top()
-			if phase, ok := ele.(string); ok {
-				tag += phase
-				zenTextHtml += phase
-			}
+			phase, _ := st.Top()
 			st.Pop()
+			tag += phase
+			zenTextHtml += phase
 			for j := 0; j < cnt-1; j++ {
 				zenTextHtml += tag
 			}
 		case "+":
 			i += 1
-			ele, _ := st.Top()
-			if phase, ok := ele.(string); ok {
-				zenTextHtml += phase
-				st.Pop()
-			}
+			phase, _ := st.Top()
+			zenTextHtml += phase
+			st.Pop()
 			zenTextHtml += tab + "<" + zenSplit[i]
 			tag = tab + "<" + zenSplit[i]
 			back = tab + "</" + zenSplit[i] + ">\n"
@@ -185,21 +183,37 @@ LOOP:
 		}
 	}
 	for st.IsEmpty() == false {
-		ele, _ := st.Top()
-		if phase, ok := ele.(string); ok {
-			zenTextHtml += phase
-		}
+		phase, _ := st.Top()
+		zenTextHtml += phase
 		st.Pop()
 	}
 	return zenTextHtml, recnt
 }
 
 func ChangeToHtml(zenText string) string {
-	zenSplit, _ := Split(zenText)
-	// for i, str := range zenSplit {
-	// 	fmt.Println(i, str)
-	// }
+	zenSplit := Split(zenText)
 	zenTextHtml, _ := ZenHtml("", zenSplit)
 	fmt.Println()
 	return zenTextHtml
+}
+
+func FileToHtml(inFile io.Reader, outFile io.Writer) (err error) {
+	var zenText string
+	ifp := bufio.NewReader(inFile)
+	ofp := bufio.NewWriter(outFile)
+	defer func() {
+		if err == nil {
+			err = ofp.Flush()
+		}
+	}()
+	for {
+		line, ok := ifp.ReadString('\n')
+		zenText += line
+		if ok != nil {
+			break
+		}
+	}
+	zenTextHtml := ChangeToHtml(zenText)
+	ofp.WriteString(zenTextHtml)
+	return nil
 }

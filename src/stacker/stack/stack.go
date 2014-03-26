@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-type Stack []interface{}
+type Stack []string
 
 func (stack Stack) Len() int {
 	return len(stack)
@@ -20,13 +20,13 @@ func (stack Stack) IsEmpty() bool {
 	return false
 }
 
-func (stack *Stack) Push(x interface{}) {
+func (stack *Stack) Push(x string) {
 	*stack = append(*stack, x)
 }
 
-func (stack Stack) Top() (interface{}, error) {
+func (stack Stack) Top() (string, error) {
 	if stack.IsEmpty() {
-		return nil, errors.New("can't Top an empty stack")
+		return "", errors.New("can't Top an empty stack")
 	}
 	return stack[len(stack)-1], nil
 }
