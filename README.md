@@ -4,7 +4,7 @@ ZenGo is a Go package which function like a compiler of Zen Code.
 ##About Zen Coding
 Emmet (previously known as **Zen Coding**) is a web-developer’s toolkit that can greatly improve your HTML & CSS workflow.
 
-You can find more information about emmet on (http://docs.emmet.io/) and (https://github.com/emmetio/emmet)
+You can find more information about emmet on [Emmet Documentation](http://docs.emmet.io/) and [Github emmet](https://github.com/emmetio/emmet)
 ##Support
 ####E#name
 #####div#name
