@@ -6,9 +6,10 @@ Emmet (previously known as **Zen Coding**) is a web-developer’s toolkit that c
 
 You can find more information about emmet on [Emmet Documentation](http://docs.emmet.io/) and [Github emmet](https://github.com/emmetio/emmet)
 ##Support
-####E!(if the element is a leaf element(like a leaf node of a tree(one of data structure)))
+####E!
+if the element is a leaf element(like a leaf node of a tree(one of data structure))
 #####html!
-	<html><html>
+	<html></html>
 ####E#name!
 #####div#name!
 	<div id="name"></div>
