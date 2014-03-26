@@ -16,9 +16,9 @@ You can find more information about emmet on [Emmet Documentation](http://docs.e
 ####E.name!
 #####div.name!
 	<div class="name"></div>
-#####div.one.two
+#####div.one.two!
 	<div class="one two"></div>
-#####div#name.one.two
+#####div#name.one.two!
 	<div id="name" class="one two"></div>
 ####E>E!
 #####head>p!
