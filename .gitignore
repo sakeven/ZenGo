@@ -1,4 +1,5 @@
 bin
+pkg
 hello.sublime-workspace
 src/ctohtml/test
 *.exe
