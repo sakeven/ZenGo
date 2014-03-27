@@ -1,6 +1,0 @@
-bin
-pkg
-hello.sublime-workspace
-!src/ctohtml/
-src/
-*.exe
