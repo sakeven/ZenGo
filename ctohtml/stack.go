@@ -29,11 +29,11 @@ func (stack Stack) Top() (string, error) {
 	return stack[len(stack)-1], nil
 }
 
-func (stack *Stack) Pop() error {
+func (stack *Stack) Pop() (string, error) {
 	thestack := *stack
 	if thestack.IsEmpty() {
-		return errors.New("can't Pop an empty stack")
+		return "", errors.New("can't Pop an empty stack")
 	}
 	*stack = thestack[:len(thestack)-1]
-	return nil
+	return thestack[len(thestack)-1], nil
 }

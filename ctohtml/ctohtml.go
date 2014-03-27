@@ -11,7 +11,7 @@ func attrCase(zenSplit Str) (string, int) {
 	i := -1
 LOOP:
 	for {
-		i += 1
+		i++
 		switch zenSplit[i] {
 		case "{":
 			i += 1
@@ -45,7 +45,7 @@ func ZenHtml(tab string, zenSplit Str) (string, int) {
 	back = tab + "</" + zenSplit[0] + ">\n"
 	st.Push(back)
 LOOP:
-	for i := 1; i < len(zenSplit); i += 1 {
+	for i := 1; i < len(zenSplit); i++ {
 		switch zenSplit[i] {
 		case "#":
 			i += 1
@@ -57,7 +57,6 @@ LOOP:
 				tag += " id=\"" + zenSplit[i]
 				flagId = true
 			}
-
 		case ">": //child tag Recursion solve
 			if flagId || flagClass {
 				zenTextHtml += "\">\n"
@@ -103,8 +102,7 @@ LOOP:
 				tag += "\n" + zenTmp
 				i += cntTmp
 			}
-			phase, _ := st.Top()
-			st.Pop()
+			phase, _ := st.Pop()
 			tag += phase
 			zenTextHtml += phase
 			for j := 0; j < cnt-1; j++ {
@@ -112,9 +110,8 @@ LOOP:
 			}
 		case "+":
 			i += 1
-			phase, _ := st.Top()
+			phase, _ := st.Pop()
 			zenTextHtml += phase
-			st.Pop()
 			zenTextHtml += tab + "<" + zenSplit[i]
 			tag = tab + "<" + zenSplit[i]
 			back = tab + "</" + zenSplit[i] + ">\n"
@@ -148,9 +145,8 @@ LOOP:
 		}
 	}
 	for st.IsEmpty() == false {
-		phase, _ := st.Top()
+		phase, _ := st.Pop()
 		zenTextHtml += phase
-		st.Pop()
 	}
 	return zenTextHtml, recnt
 }
