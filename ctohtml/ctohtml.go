@@ -2,7 +2,6 @@ package ctohtml
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"strconv"
 )
@@ -156,10 +155,9 @@ LOOP:
 	return zenTextHtml, recnt
 }
 
-func ChangeToHtml(zenText zenObj) string {
+func (zenText zenObj) ChangeToHtml() string {
 	zenSplit := zenText.Split()
 	zenTextHtml, _ := ZenHtml("", zenSplit)
-	fmt.Println("abs")
 	return zenTextHtml
 }
 
@@ -179,8 +177,7 @@ func FileToHtml(inFile io.Reader, outFile io.Writer) (err error) {
 			break
 		}
 	}
-	fmt.Println("fiel")
-	zenTextHtml := ChangeToHtml(zenObj(zenText))
+	zenTextHtml := zenObj(zenText).ChangeToHtml()
 	ofp.WriteString(zenTextHtml)
 	return nil
 }
