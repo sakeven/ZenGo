@@ -190,6 +190,7 @@ LOOP:
 			st.Push(back)
 		case "!": //leaf node flag
 			if flagMul {
+				flagMul = false
 				continue
 			}
 			if flagId || flagClass {
