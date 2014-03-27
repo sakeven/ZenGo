@@ -1,0 +1,13 @@
+html>
+	head>
+		meta*2!
+		+style[type{textcss}]!
+		+title!
+		^
+	+body[style]>
+		p>
+			font!
+			^
+		+div>
+			p*4>
+			a[href]!
