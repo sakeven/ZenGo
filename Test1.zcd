@@ -1,13 +1,13 @@
 html>
 	head>
-		meta*2!
-		+style[type{textcs\as{da} fas},sa]!
-		+title!
+		meta*2
+		+style[type{textcs\as{da} fas},sa]
+		+title
 		^
 	+body[style]>
 		p>
-			font!
+			font
 			^
 		+div>
 			p*4>
-			a[href]!
+			a[href]

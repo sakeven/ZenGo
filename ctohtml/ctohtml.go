@@ -159,12 +159,12 @@ LOOP:
 func ChangeToHtml(zenText zenObj) string {
 	zenSplit := zenText.Split()
 	zenTextHtml, _ := ZenHtml("", zenSplit)
-	fmt.Println()
+	fmt.Println("abs")
 	return zenTextHtml
 }
 
 func FileToHtml(inFile io.Reader, outFile io.Writer) (err error) {
-	var zenText zenObj
+	var zenText string
 	ifp := bufio.NewReader(inFile)
 	ofp := bufio.NewWriter(outFile)
 	defer func() {
@@ -179,7 +179,8 @@ func FileToHtml(inFile io.Reader, outFile io.Writer) (err error) {
 			break
 		}
 	}
-	zenTextHtml := ChangeToHtml(zenText)
+	fmt.Println("fiel")
+	zenTextHtml := ChangeToHtml(zenObj(zenText))
 	ofp.WriteString(zenTextHtml)
 	return nil
 }
