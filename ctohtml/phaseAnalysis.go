@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func ToHtml(phase string) string { //text convert to HTML
+func (phase zenObj) ToHtml() string { //text convert to HTML
 	var htmlphase string
 	for _, char := range phase {
 		switch char {
@@ -30,7 +30,7 @@ func ToHtml(phase string) string { //text convert to HTML
 	return htmlphase
 }
 
-func Split(zenText string) Str {
+func (zenText zenObj) Split() Str {
 	var (
 		zenSplit Str
 		phase    string
@@ -67,7 +67,6 @@ func Split(zenText string) Str {
 					phase += char
 					i += 1
 				}
-				//zenSplit = append(zenSplit, phase)
 			}
 		} else if strings.Index(illegalStr, char) == -1 {
 			phase += char
@@ -79,8 +78,5 @@ func Split(zenText string) Str {
 	for i := 0; i < leve; i += 1 {
 		zenSplit = append(zenSplit, "^")
 	}
-	// for _, str := range zenSplit {
-	// 	fmt.Println(str)
-	// }
 	return zenSplit
 }

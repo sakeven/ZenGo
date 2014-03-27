@@ -156,15 +156,15 @@ LOOP:
 	return zenTextHtml, recnt
 }
 
-func ChangeToHtml(zenText string) string {
-	zenSplit := Split(zenText)
+func ChangeToHtml(zenText zenObj) string {
+	zenSplit := zenText.Split()
 	zenTextHtml, _ := ZenHtml("", zenSplit)
 	fmt.Println()
 	return zenTextHtml
 }
 
 func FileToHtml(inFile io.Reader, outFile io.Writer) (err error) {
-	var zenText string
+	var zenText zenObj
 	ifp := bufio.NewReader(inFile)
 	ofp := bufio.NewWriter(outFile)
 	defer func() {
