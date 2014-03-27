@@ -6,7 +6,10 @@ import (
 
 type Str []string
 
-const opStr string = "#>[]*.^!+{},"
+const (
+	opStr      string = "#>[]*.^!+{},"
+	illegalStr string = "\t\n \r"
+)
 
 type Stack []string
 

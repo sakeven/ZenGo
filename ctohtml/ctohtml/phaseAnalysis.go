@@ -1,5 +1,10 @@
 package ctohtml
 
+import (
+	// "fmt"
+	"strings"
+)
+
 func ToHtml(phase string) string { //text convert to HTML
 	var htmlphase string
 	for _, char := range phase {
@@ -29,29 +34,43 @@ func Split(zenText string) Str {
 	var (
 		zenSplit Str
 		phase    string
-		nopflag  bool
 		leve     int
 	)
-	for _, char := range zenText {
-		nopflag = true
-		for i := 0; i < len(opStr); i += 1 {
-			if int(char) == int(opStr[i]) {
-				if char == '>' {
-					leve += 1
-				} else if char == '^' {
-					leve -= 1
-				}
-				if phase != "" {
-					zenSplit = append(zenSplit, phase)
-				}
-				zenSplit = append(zenSplit, string(char))
+	for i := 0; i < len(zenText); i += 1 {
+		char := string(zenText[i])
+		if strings.Index(opStr, char) != -1 {
+			if phase != "" {
+				zenSplit = append(zenSplit, phase)
 				phase = ""
-				nopflag = false
-				break
 			}
-		}
-		if nopflag && char != '\n' && char != '\r' && char != ' ' && char != '	' {
-			phase += string(char)
+			zenSplit = append(zenSplit, char)
+			switch char {
+			case ">":
+				leve += 1
+			case "^":
+				leve -= 1
+			case "{":
+				i += 1
+				cnt := 0
+				phase = ""
+				for {
+					char = string(zenText[i])
+					if char == "{" {
+						cnt += 1
+					} else if char == "}" {
+						if cnt == 0 {
+							i -= 1
+							break
+						}
+						cnt -= 1
+					}
+					phase += char
+					i += 1
+				}
+				//zenSplit = append(zenSplit, phase)
+			}
+		} else if strings.Index(illegalStr, char) == -1 {
+			phase += char
 		}
 	}
 	if phase != "" {
@@ -60,5 +79,8 @@ func Split(zenText string) Str {
 	for i := 0; i < leve; i += 1 {
 		zenSplit = append(zenSplit, "^")
 	}
+	// for _, str := range zenSplit {
+	// 	fmt.Println(str)
+	// }
 	return zenSplit
 }
