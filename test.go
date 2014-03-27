@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ctohtml/ctohtml"
+	"ctohtml"
 	"fmt"
 	"log"
 	"os"
