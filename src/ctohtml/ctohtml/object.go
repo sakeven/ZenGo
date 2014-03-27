@@ -1,10 +1,13 @@
-package Struct
+package ctohtml
 
 import (
 	"errors"
 )
 
 type Str []string
+
+const opStr string = "#>[]*.^!+{},"
+
 type Stack []string
 
 func (stack Stack) Len() int {

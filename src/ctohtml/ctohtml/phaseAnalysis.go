@@ -1,4 +1,4 @@
-package phaseAnalysis
+package ctohtml
 
 func ToHtml(phase string) string { //text convert to HTML
 	var htmlphase string
@@ -24,10 +24,6 @@ func ToHtml(phase string) string { //text convert to HTML
 	}
 	return htmlphase
 }
-
-type Str []string
-
-const opStr string = "#>[]*.^!+{},"
 
 func Split(zenText string) Str {
 	var (

@@ -8,8 +8,8 @@ import (
 func main() {
 	var haystack stack.Stack
 	haystack.Push("hay")
-	haystack.Push(1)
-	haystack.Push(82.3)
+	haystack.Push("sda")
+	haystack.Push("asd")
 	fmt.Println(haystack.Cap())
 	for {
 		item, err := haystack.Top()
