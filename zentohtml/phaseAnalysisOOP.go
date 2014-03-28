@@ -62,7 +62,7 @@ func (zenText zenObj) Split() eleArr {
 				flag = nonFlag
 			}
 			switch char { //begin flag
-			case "+", "^", "*":
+			case "+", ">", "*":
 				zenSpl = append(zenSpl, ele)
 				flag = eleFlag
 				ele = *(new(elemen))
