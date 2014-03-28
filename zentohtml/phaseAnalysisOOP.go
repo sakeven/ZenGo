@@ -1,4 +1,4 @@
-package ctohtml
+package zentohtml
 
 import (
 	"strings"
@@ -76,11 +76,10 @@ func (zenText zenObj) Split() Str {
 				} else if flag == eleFlag {
 					ele.name = phase
 					ele.flag = eleFlag
+				} else if flag == mulFalg {
+					arr.name = phase
+					arr.flag = mulFlag
 				}
-				// } else if flag == mulFalg {
-				// 	arr.name = phase
-				//	arr.flag = mulFlag
-				// }
 				flag = nonFlag
 			}
 			switch char { //begin flag
@@ -95,7 +94,6 @@ func (zenText zenObj) Split() Str {
 				flag = valueFlag
 			case "*":
 				flag = mulFalg
-				//Todo:split the repeat number
 			default:
 				flag = nonFlag
 			}
@@ -108,13 +106,16 @@ func (zenText zenObj) Split() Str {
 				i += 1
 				cnt := 0
 				phase, cnt = zenText[i:].getValue()
-				if flag == attrFlag {
+				if flag == valueFlag {
 					Tag.val = append(Tag.val, phase)
 				}
+				flag = nonFlag
 				i += cnt
 			}
-			op := elemen{name: "op", flag: opFlag}
-			//zenSplit = append(zenSplit, char)
+			if char == "+" || char == ">" || char == "^" {
+				op := elemen{name: char, flag: opFlag}
+				zenSpl = append(zenSpl, op)
+			}
 		} else if strings.Index(illegalStr, char) == -1 {
 			phase += char
 		}
