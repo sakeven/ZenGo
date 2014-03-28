@@ -30,7 +30,9 @@ func (zenText zenObj) getValue() (string, int) {
 			}
 			cnt -= 1
 		}
-		phase += schar
+		if cnt > 1 {
+			phase += schar
+		}
 	}
 	return phase, cnt
 }
@@ -46,7 +48,7 @@ func (zenText zenObj) Split() eleArr {
 	for i := 0; i < len(zenText); i += 1 {
 		char := string(zenText[i])
 		if strings.Index(opStr, char) != -1 {
-			if strings.Index(endStr, char) != -1 {
+			if strings.Index(endStr, char) != -1 && phase != "" {
 				if flag == valueFlag {
 					attr.val = append(Tag.val, phase)
 				} else if flag == attrFlag {
@@ -86,6 +88,7 @@ func (zenText zenObj) Split() eleArr {
 			default:
 				flag = nonFlag
 			}
+			phase = ""
 			if char == "+" || char == ">" || char == "^" || char == "*" {
 				op := elemen{name: char, flag: opFlag}
 				zenSpl = append(zenSpl, op)
