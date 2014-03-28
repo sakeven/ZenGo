@@ -51,54 +51,70 @@ func (zenText zenObj) getValue() (string, int) {
 }
 
 var Arr []elemen
-var Tag elemen
+var arr elemen
+var ele elemen
 
 func (zenText zenObj) Split() Str {
 	var (
-		zenSplit          Str
-		zenSpl            []elemen
-		phase             string
-		leve              int
-		eleflag, attrflag bool
+		zenSplit Str
+		zenSpl   []elemen
+		phase    string
+		leve     int
+		flag     bool
 	)
 	zenText += "!"
 	for i := 0; i < len(zenText); i += 1 {
 		char := string(zenText[i])
 		if strings.Index(opStr, char) != -1 {
 			switch char {
-			case "[":
-				attrflag = true
-			case ">":
-				zenSpl[len(zenSpl)-1].attr = Arr
-				Arr = Arr[0:0]
-				eleflag = true
-				leve += 1
-			case "^":
-				leve -= 1
+			case ">", "#", "*", "+", "[", "^", ".", ",": //end flag
+				if flag == valueFlag {
+					arr.val = append(Tag.val, phase)
+				} else if flag == attrFlag {
+					arr.name = phase
+					ele.attr = append(ele.attr, arr)
+				} else if flag == eleFlag {
+					ele.name = phase
+					ele.flag = eleFlag
+				}
+				// } else if flag == mulFalg {
+				// 	arr.name = phase
+				//	arr.flag = mulFlag
+				// }
+				flag = nonFlag
+			}
+			switch char { //begin flag
+			case ">", "+":
+				zenSpl = append(zenSpl, ele)
+				flag = eleFlag
+				ele = *(new(elemen))
+			case "[", ",":
+				flag = attrFlag
+				arr = *(new(elemen))
+			case "{", ".", "#":
+				flag = valueFlag
+			case "*":
+				flag = mulFalg
+				//Todo:split the repeat number
+			default:
+				flag = nonFlag
+			}
+			switch char {
+			case "#":
+				Tag.name = "id"
+			case ".":
+				Tag.name = "class"
 			case "{":
 				i += 1
 				cnt := 0
 				phase, cnt = zenText[i:].getValue()
-			}
-			if phase != "" {
-				if eleflag {
-					Tag.name = phase
-					Tag.flag = eleFlag
-					Arr = append(Arr, Tag)
-					eleflag = false
-				} else if attrflag {
-					Tag.name = phase
-					Tag.flag = attrFlag
-					attrflag = false
+				if flag == attrFlag {
+					Tag.val = append(Tag.val, phase)
 				}
-				zenSplit = append(zenSplit, phase)
-				phase = ""
+				i += cnt
 			}
-			if char == "^" || (zenSplit[len(zenSplit)-1] != "^" && char == "+") {
-				zenSplit = append(zenSplit, "!")
-			}
-			zenSplit = append(zenSplit, char)
-
+			op := elemen{name: "op", flag: opFlag}
+			//zenSplit = append(zenSplit, char)
 		} else if strings.Index(illegalStr, char) == -1 {
 			phase += char
 		}
