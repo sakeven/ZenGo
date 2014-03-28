@@ -3,6 +3,9 @@ package ctohtml
 const (
 	opStr      string = "#>[]*.^!+{},"
 	illegalStr string = "\t\n \r"
+	eleFlag    int    = 1
+	attrFlag   int    = 2
+	valueFlag  int    = 3
 )
 
 type Stack []string
@@ -12,4 +15,5 @@ type elemen struct {
 	name string
 	val  []string
 	attr []attribute
+	flag bool
 }
