@@ -3,6 +3,7 @@ package zentohtml
 const (
 	opStr      string = "#>[]*.^!+{},"
 	illegalStr string = "\t\n \r"
+	endStr     string = ">#*+[^.,"
 )
 const (
 	nonFlag = iota
@@ -23,3 +24,5 @@ type elemen struct {
 	attr []attribute
 	flag int
 }
+
+var eleArr []elemen

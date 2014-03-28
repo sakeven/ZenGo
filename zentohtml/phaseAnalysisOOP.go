@@ -6,23 +6,11 @@ import (
 
 func (zenText zenObj) ToHtml() string { //text convert to HTML
 	var htmlText string
+	m := map[rune]string{'<': "&lt;", '>': "&gt;", '"': "&quot;", ' ': "&nbsp;", '&': "&amp;", '©': "&copy;", '®': "&reg;"}
 	for _, char := range zenText {
-		switch char {
-		case '<':
-			htmlText += "&lt;"
-		case '>':
-			htmlText += "&gt;"
-		case '"':
-			htmlText += "&quot;"
-		case ' ':
-			htmlText += "&nbsp;"
-		case '&':
-			htmlText += "&amp;"
-		case '©':
-			htmlText += "&copy;"
-		case '®':
-			htmlText += "&reg;"
-		default:
+		if esc, ok := m[char]; ok {
+			htmlText += esc
+		} else {
 			htmlText += string(char)
 		}
 	}
@@ -30,89 +18,75 @@ func (zenText zenObj) ToHtml() string { //text convert to HTML
 }
 
 func (zenText zenObj) getValue() (string, int) {
-	i = 1
-	cnt := 0
-	phase = ""
-	for {
-		char = string(zenText[i])
-		if char == "{" {
+	cnt, phase := 0, ""
+	for i, char := range zenText {
+		schar := string(char)
+		if schar == "{" {
 			cnt += 1
-		} else if char == "}" {
-			if cnt == 0 {
-				i -= 1
+		} else if schar == "}" {
+			if cnt == 1 {
+				cnt = i
 				break
 			}
 			cnt -= 1
 		}
-		phase += char
-		i += 1
+		phase += schar
 	}
-	return phase, i
+	return phase, cnt
 }
 
-var Arr []elemen
-var arr elemen
-var ele elemen
-
-func (zenText zenObj) Split() Str {
+func (zenText zenObj) Split() eleArr {
 	var (
-		zenSplit Str
-		zenSpl   []elemen
-		phase    string
-		leve     int
-		flag     bool
+		zenSplit               Str
+		zenSpl, attr, ele, num eleArr
+		phase                  string
+		leve                   int
+		flag                   bool
 	)
-	zenText += "!"
 	for i := 0; i < len(zenText); i += 1 {
 		char := string(zenText[i])
 		if strings.Index(opStr, char) != -1 {
-			switch char {
-			case ">", "#", "*", "+", "[", "^", ".", ",": //end flag
+			if strings.Index(endStr, char) != -1 {
 				if flag == valueFlag {
-					arr.val = append(Tag.val, phase)
+					attr.val = append(Tag.val, phase)
 				} else if flag == attrFlag {
-					arr.name = phase
+					attr.name = phase
 					ele.attr = append(ele.attr, arr)
 				} else if flag == eleFlag {
 					ele.name = phase
 					ele.flag = eleFlag
 				} else if flag == mulFalg {
-					arr.name = phase
-					arr.flag = mulFlag
+					ele.name = phase
+					ele.flag = mulFlag
 				}
 				flag = nonFlag
 			}
 			switch char { //begin flag
-			case ">", "+":
+			case "+", "^", "*":
 				zenSpl = append(zenSpl, ele)
 				flag = eleFlag
 				ele = *(new(elemen))
 			case "[", ",":
 				flag = attrFlag
 				arr = *(new(elemen))
-			case "{", ".", "#":
+			case "#":
 				flag = valueFlag
+				Tag.name = "id"
+			case ".":
+				flag = valueFlag
+				Tag.name = "class"
+			case "{":
+				cnt := 0
+				phase, cnt = zenText[i:].getValue()
+				arr.val = append(arr.val, phase)
+				flag = nonFlag
+				i += cnt
 			case "*":
 				flag = mulFalg
 			default:
 				flag = nonFlag
 			}
-			switch char {
-			case "#":
-				Tag.name = "id"
-			case ".":
-				Tag.name = "class"
-			case "{":
-				i += 1
-				cnt := 0
-				phase, cnt = zenText[i:].getValue()
-				if flag == valueFlag {
-					Tag.val = append(Tag.val, phase)
-				}
-				flag = nonFlag
-				i += cnt
-			}
-			if char == "+" || char == ">" || char == "^" {
+			if char == "+" || char == ">" || char == "^" || char == "*" {
 				op := elemen{name: char, flag: opFlag}
 				zenSpl = append(zenSpl, op)
 			}
@@ -121,7 +95,7 @@ func (zenText zenObj) Split() Str {
 		}
 	}
 	for i := 0; i < leve; i += 1 {
-		zenSplit = append(zenSplit, "^")
+		zenSpl = append(zenSpl, elemen{name: "^", flag: opFlag})
 	}
-	return zenSplit
+	return zenSpl
 }
