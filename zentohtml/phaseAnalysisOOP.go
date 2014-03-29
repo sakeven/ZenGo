@@ -1,7 +1,6 @@
 package zentohtml
 
 import (
-	//"fmt"
 	"strings"
 )
 
@@ -38,7 +37,7 @@ func (zenText ZenObj) getValue() (string, int) {
 			phase += schar
 		}
 	}
-	return phase, cnt + 1
+	return phase, cnt
 }
 
 func (zenText ZenObj) Split() eleArr {
