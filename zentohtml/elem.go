@@ -1,11 +1,11 @@
 package zentohtml
 
-import (
-	"errors"
-	//"fmt"
-)
+// import (
+// 	"errors"
+// 	//"fmt"
+// )
 
-func (e elemen) typeof() string {
+func (e elemen) Typeof() string {
 	switch e.flag {
 	case textFlag:
 		return "Text"
@@ -23,39 +23,32 @@ func (e elemen) typeof() string {
 	return ""
 }
 
-func (e elemen) repAttr() (attr string, err error) {
+func (e elemen) RepAttr() (attr string) {
 	if e.flag == attrFlag {
 		attr = e.name + "=\""
 		for _, value := range e.val {
 			attr += value + " "
 		}
 		attr += "\""
-	} else {
-		err = errors.New("Not an attribute")
 	}
-	return attr, err
+	return attr
 }
 
-func (e elemen) repPreelement() (tag string, err error) {
+func (e elemen) RepPreelement() (tag string) {
 	if e.flag == eleFlag {
 		tag = "<" + e.name
 		for _, attr := range e.attr {
-			str, _ := attr.repAttr()
+			str := attr.RepAttr()
 			tag += " " + str
 		}
 		tag += ">"
-	} else {
-		err = errors.New("Not an element")
 	}
-	//fmt.Println("123", tag)
-	return tag, err
+	return tag
 }
 
-func (e elemen) repBackelement() (tag string, err error) {
+func (e elemen) RepBackelement() (tag string) {
 	if e.flag == eleFlag {
 		tag = "</" + e.name + ">"
-	} else {
-		err = errors.New("Not an element")
 	}
-	return tag, err
+	return tag
 }

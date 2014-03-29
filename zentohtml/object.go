@@ -4,7 +4,7 @@ const (
 	opStr      string = "#>[]*.^!+{},"
 	illegalOp  string = "#[].!{},"
 	illegalStr string = "\t\n \r"
-	endStr     string = ">#*+[^.,]"
+	endStr     string = ">#*+[^,]"
 )
 const (
 	nonFlag = iota
@@ -16,7 +16,6 @@ const (
 	mulFlag
 )
 
-type Stack []string
 type Str []string
 type ZenObj string
 type elemen struct {
@@ -25,5 +24,5 @@ type elemen struct {
 	attr []elemen
 	flag int
 }
-
+type Stack []elemen
 type eleArr []elemen

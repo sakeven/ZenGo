@@ -1,6 +1,7 @@
 package zentohtml
 
 import (
+	//"fmt"
 	"strings"
 )
 
@@ -46,25 +47,24 @@ func (zenText ZenObj) Split() eleArr {
 		zenSpl    eleArr
 		phase     string
 		leve      int
-		flag      int
+		flag      int = eleFlag
 	)
-	flag = eleFlag
+	count := strings.Count(string(zenText), ">") - strings.Count(string(zenText), "^")
+	zenText += ZenObj(strings.Repeat("^", count+1))
 	for i := 0; i < len(zenText); i += 1 {
 		char := string(zenText[i])
 		if strings.Index(opStr, char) != -1 {
 			if strings.Index(endStr, char) != -1 && phase != "" {
 				if flag == valueFlag {
 					attr.val = append(attr.val, phase)
+					ele.attr = append(ele.attr, attr)
 				} else if flag == attrFlag {
-					attr.name = phase
-					attr.flag = attrFlag
+					attr.name, attr.flag = phase, attrFlag
 					ele.attr = append(ele.attr, attr)
 				} else if flag == eleFlag {
-					ele.name = phase
-					ele.flag = eleFlag
+					ele.name, ele.flag = phase, eleFlag
 				} else if flag == mulFlag {
-					ele.name = phase
-					ele.flag = mulFlag
+					ele.name, ele.flag = phase, mulFlag
 				}
 				flag = nonFlag
 			}
@@ -78,16 +78,16 @@ func (zenText ZenObj) Split() eleArr {
 				} else {
 					flag = eleFlag
 				}
-				ele = *(new(elemen))
+				ele, attr = *(new(elemen)), *(new(elemen))
 			case "[", ",":
 				flag = attrFlag
 				attr = *(new(elemen))
 			case "#":
 				flag = valueFlag
-				attr.name = "id"
+				attr.name, attr.flag = "id", attrFlag
 			case ".":
 				flag = valueFlag
-				attr.name = "class"
+				attr.name, attr.flag = "class", attrFlag
 			case "{":
 				if phase == "" {
 					continue

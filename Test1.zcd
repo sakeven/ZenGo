@@ -1,6 +1,8 @@
 html>
 	head>
 		meta*2
+		>p
+		^
 		+style#id[type{textcs\as{da} fas},sa]
 		+title
 		^

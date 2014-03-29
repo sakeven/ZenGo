@@ -18,21 +18,21 @@ func (stack Stack) IsEmpty() bool {
 	return false
 }
 
-func (stack *Stack) Push(x string) {
+func (stack *Stack) Push(x elemen) {
 	*stack = append(*stack, x)
 }
 
-func (stack Stack) Top() (string, error) {
+func (stack Stack) Top() (elemen, error) {
 	if stack.IsEmpty() {
-		return "", errors.New("can't Top an empty stack")
+		return *(new(elemen)), errors.New("can't Top an empty stack")
 	}
 	return stack[len(stack)-1], nil
 }
 
-func (stack *Stack) Pop() (string, error) {
+func (stack *Stack) Pop() (elemen, error) {
 	thestack := *stack
 	if thestack.IsEmpty() {
-		return "", errors.New("can't Pop an empty stack")
+		return *(new(elemen)), errors.New("can't Pop an empty stack")
 	}
 	*stack = thestack[:len(thestack)-1]
 	return thestack[len(thestack)-1], nil

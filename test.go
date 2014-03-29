@@ -1,11 +1,11 @@
 package main
 
 import (
-	"ctohtml"
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
+	"zentohtml"
 )
 
 func filenamesFromCommandLine() (inFilename, outFilename string, err error) {
@@ -40,5 +40,5 @@ func main() {
 		log.Fatal(err)
 	}
 	defer outFile.Close()
-	ctohtml.FileToHtml(inFile, outFile)
+	zentohtml.FileToHtml(inFile, outFile)
 }
