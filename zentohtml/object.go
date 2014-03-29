@@ -2,8 +2,9 @@ package zentohtml
 
 const (
 	opStr      string = "#>[]*.^!+{},"
+	illegalOp  string = "#[].!{},"
 	illegalStr string = "\t\n \r"
-	endStr     string = ">#*+[^.,"
+	endStr     string = ">#*+[^.,]"
 )
 const (
 	nonFlag = iota
@@ -12,17 +13,17 @@ const (
 	eleFlag
 	attrFlag
 	valueFlag
-	mulFalg
+	mulFlag
 )
 
 type Stack []string
 type Str []string
-type zenObj string
+type ZenObj string
 type elemen struct {
 	name string
 	val  []string
-	attr []attribute
+	attr []elemen
 	flag int
 }
 
-var eleArr []elemen
+type eleArr []elemen

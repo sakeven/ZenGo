@@ -2,6 +2,7 @@ package zentohtml
 
 import (
 	"errors"
+	//"fmt"
 )
 
 func (e elemen) typeof() string {
@@ -16,16 +17,17 @@ func (e elemen) typeof() string {
 		return "Element"
 	case valueFlag:
 		return "Value"
-	case mulFalg:
+	case mulFlag:
 		return "Repeate"
 	}
+	return ""
 }
 
 func (e elemen) repAttr() (attr string, err error) {
 	if e.flag == attrFlag {
 		attr = e.name + "=\""
 		for _, value := range e.val {
-			attr += e.val + " "
+			attr += value + " "
 		}
 		attr += "\""
 	} else {
@@ -38,12 +40,14 @@ func (e elemen) repPreelement() (tag string, err error) {
 	if e.flag == eleFlag {
 		tag = "<" + e.name
 		for _, attr := range e.attr {
-			tag += " " + attr.repAttr()
+			str, _ := attr.repAttr()
+			tag += " " + str
 		}
 		tag += ">"
 	} else {
 		err = errors.New("Not an element")
 	}
+	//fmt.Println("123", tag)
 	return tag, err
 }
 

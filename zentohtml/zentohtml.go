@@ -151,10 +151,10 @@ LOOP:
 	return zenTextHtml, recnt
 }
 
-func (zenText zenObj) ChangeToHtml() string {
-	zenSplit := zenText.Split()
-	zenTextHtml, _ := ZenHtml("", zenSplit)
-	return zenTextHtml
+func (zenText ZenObj) ChangeToHtml() string {
+	//zenSplit := zenText.Split()
+	//zenTextHtml, _ := ZenHtml("", zenSplit)
+	return "" //zenTextHtml
 }
 
 func FileToHtml(inFile io.Reader, outFile io.Writer) (err error) {
@@ -173,7 +173,7 @@ func FileToHtml(inFile io.Reader, outFile io.Writer) (err error) {
 			break
 		}
 	}
-	zenTextHtml := zenObj(zenText).ChangeToHtml()
+	zenTextHtml := ZenObj(zenText).ChangeToHtml()
 	ofp.WriteString(zenTextHtml)
 	return nil
 }
