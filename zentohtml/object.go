@@ -1,8 +1,8 @@
 package zentohtml
 
 const (
-	opStr      string = "#>[]*.^!+{},"
-	illegalOp  string = "#[].!{},"
+	opStr      string = "#>[]*.^!+{},="
+	illegalOp  string = "#[].!{},="
 	illegalStr string = "\t\n \r"
 	endStr     string = ">#*+[^,]"
 )

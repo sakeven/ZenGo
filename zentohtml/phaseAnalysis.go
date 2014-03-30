@@ -1,6 +1,7 @@
 package zentohtml
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -17,16 +18,17 @@ func (zenText ZenObj) ToHtml() string { //text convert to HTML
 	return htmlText
 }
 
-func (zenText ZenObj) getValue() (string, int) {
-	cnt, phase := 0, ""
+func (zenText ZenObj) getText() (string, int) {
+	cnt, phase, begChar, endChar := 0, "", "{", "}"
 	for i, char := range zenText {
 		schar := string(char)
-		if schar == "{" {
+		if schar == begChar {
+
 			cnt += 1
 			if cnt == 1 {
 				continue
 			}
-		} else if schar == "}" {
+		} else if schar == endChar {
 			if cnt == 1 {
 				cnt = i
 				break
@@ -36,6 +38,22 @@ func (zenText ZenObj) getValue() (string, int) {
 		if cnt >= 1 {
 			phase += schar
 		}
+	}
+	return phase, cnt
+}
+
+func (zenText ZenObj) getValue() (string, int) {
+	cnt, flag, phase, quoChar := 0, true, "", "\""
+	for i, char := range zenText {
+		schar := string(char)
+		if schar == quoChar && flag {
+			flag = false
+			continue
+		} else if schar == quoChar && flag == false {
+			cnt = i
+			break
+		}
+		phase += schar
 	}
 	return phase, cnt
 }
@@ -87,17 +105,26 @@ func (zenText ZenObj) Split() eleArr {
 			case ".":
 				flag = valueFlag
 				attr.name, attr.flag = "class", attrFlag
-			case "{":
+			case "=":
 				if phase == "" {
 					continue
 				}
 				cnt := 0
+				i += 1
 				attr.name, attr.flag = phase, attrFlag
 				phase, cnt = zenText[i:].getValue()
 				attr.val = append(attr.val, phase)
 				ele.attr = append(ele.attr, attr)
 				flag = nonFlag
 				i += cnt
+			case "{":
+				cnt := 0
+				ele.flag = textFlag
+				phase, cnt = zenText[i:].getText()
+				ele.name = phase
+				flag = nonFlag
+				i += cnt
+				fmt.Println("sad", string(zenText[i]))
 			default:
 				flag = nonFlag
 			}
@@ -111,6 +138,9 @@ func (zenText ZenObj) Split() eleArr {
 	}
 	for i := 0; i < leve; i += 1 {
 		zenSpl = append(zenSpl, elemen{name: "^", flag: opFlag})
+	}
+	for _, fs := range zenSpl {
+		fmt.Println(fs.name)
 	}
 	return zenSpl
 }

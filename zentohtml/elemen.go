@@ -1,9 +1,10 @@
 package zentohtml
 
-// import (
-// 	"errors"
-// 	//"fmt"
-// )
+import (
+	"strings"
+	// "errors"
+	//"fmt"
+)
 
 func (e elemen) Typeof() string {
 	switch e.flag {
@@ -29,6 +30,7 @@ func (e elemen) RepAttr() (attr string) {
 		for _, value := range e.val {
 			attr += value + " "
 		}
+		attr = strings.TrimSpace(attr)
 		attr += "\""
 	}
 	return attr
